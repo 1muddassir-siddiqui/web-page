@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pipeline Demo v2.0</title>
+    <title>Pipeline Demo v3.0</title>
     <style>
         * {
             margin: 0;
@@ -11,66 +11,156 @@
             box-sizing: border-box;
         }
         body {
-            font-family: 'Courier New', monospace;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #f9ca24);
+            background-size: 400% 400%;
+            animation: gradientShift 10s ease infinite;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
         }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
         .card {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-            text-align: center;
-            max-width: 500px;
-        }
-        h1 {
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 2.5em;
-        }
-        .badge {
-            background: #ff6b6b;
-            color: white;
-            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 50px;
             border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            text-align: center;
+            max-width: 600px;
+            color: white;
+        }
+        
+        h1 {
+            margin-bottom: 30px;
+            font-size: 3.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        
+        .badge {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
             display: inline-block;
-            margin: 20px 0;
+            margin: 25px 0;
             font-weight: bold;
+            font-size: 1.2em;
+            box-shadow: 0 8px 20px rgba(255,107,107,0.3);
+            animation: glow 2s ease-in-out infinite alternate;
         }
+        
+        @keyframes glow {
+            from { box-shadow: 0 8px 20px rgba(255,107,107,0.3); }
+            to { box-shadow: 0 8px 30px rgba(255,107,107,0.6); }
+        }
+        
         .info {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 20px;
+            margin-top: 30px;
+            backdrop-filter: blur(5px);
         }
+        
+        .demo-text {
+            font-size: 1.3em;
+            margin: 20px 0;
+            font-weight: 500;
+        }
+        
+        .status-indicators {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 25px;
+        }
+        
+        .indicator {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            min-width: 120px;
+        }
+        
+        .indicator h4 {
+            margin-bottom: 10px;
+            color: #4ecdc4;
+        }
+        
         .pulse {
-            animation: pulse 2s infinite;
+            animation: pulse 1.5s infinite;
         }
+        
         @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+            100% { opacity: 1; transform: scale(1); }
         }
     </style>
 </head>
 <body>
     <div class="card">
-        <h1>🎯 UPDATED!</h1>
-        <div class="badge pulse">Version 2.0 - NEW DESIGN</div>
-        <p>🚀 CI/CD Pipeline Successfully Deployed!</p>
+        <h1>🚀 CI/CD DEMO SUCCESS!</h1>
+        <div class="badge pulse">Version 3.0 - LIVE UPDATE!</div>
+        <p class="demo-text">🎉 Automated Pipeline Deployment Working!</p>
+        
         <div class="info">
-            <h3>📊 Deployment Details</h3>
-            <p><strong>Updated at:</strong> <span id="updateTime"></span></p>
-            <p><strong>Build:</strong> LATEST</p>
-            <p><strong>Status:</strong> 🟢 LIVE</p>
+            <h3>🔄 Real-time Deployment Status</h3>
+            
+            <div class="status-indicators">
+                <div class="indicator">
+                    <h4>⏰ Updated</h4>
+                    <p id="updateTime"></p>
+                </div>
+                <div class="indicator">
+                    <h4>🏗️ Build</h4>
+                    <p>AUTO-DEPLOYED</p>
+                </div>
+                <div class="indicator">
+                    <h4>📊 Status</h4>
+                    <p>🟢 RUNNING</p>
+                </div>
+            </div>
+            
+            <p style="margin-top: 25px; font-size: 1.1em;">
+                <strong>🎯 Demo Complete:</strong> Code → Git → CI/CD → K8s → Live!
+            </p>
         </div>
     </div>
-
+    
     <script>
-        document.getElementById('updateTime').textContent = new Date().toLocaleString();
+        // Update time every second for demo effect
+        function updateTime() {
+            document.getElementById('updateTime').textContent = 
+                new Date().toLocaleTimeString();
+        }
+        
+        updateTime();
+        setInterval(updateTime, 1000);
+        
+        // Add some interactive elements
+        document.querySelector('.badge').addEventListener('click', function() {
+            this.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 200);
+        });
     </script>
 </body>
 </html>
